@@ -1,15 +1,16 @@
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 
-import monitor from '../assets/room.obj';
+import room from '../assets/models/room.obj';
 
 let scene, camera, renderer, controls, hemiLight, spotLight;
 let model = new THREE.Object3D()
 
 const width = 500;
 const height= 500;
+
+const canvas = document.getElementById('canvas');
 
 // blue 0x4287f5
 // black 0x000000
@@ -20,18 +21,14 @@ export const init = () => {
     scene = new THREE.Scene();
     scene.background = new THREE.Color( 0xdddddd );
 
-    const cubeTarget = new THREE.WebGLCubeRenderTarget(128, { generateMipmaps: true,
-        minFilter: THREE.LinearMipMapLinearFilter});
-    
-    //let camera = new THREE.CubeCamera(1, 10000, cubeTarget);
-    //scene.add(camera);
-
+    // camera
     camera = new THREE.PerspectiveCamera(60, width/height, 1, 5000);
     camera.position.set(0, 25, 25);
 
+    // axis helper
     scene.add(new THREE.AxesHelper(500));
 
-    const canvas = document.getElementById('canvas');
+    // renderer
     renderer = new THREE.WebGLRenderer({canvas});
     renderer.setSize(width, height);
 
@@ -48,8 +45,7 @@ export const init = () => {
     // loading 3D object
     const loader = new OBJLoader();
     
-    // this works!
-    loader.load(monitor, (obj) => {
+    loader.load(room, (obj) => {
         model = obj;
         model.scale.set(2, 2, 2);
         scene.add(model);
@@ -93,4 +89,12 @@ const animate = () => {
     },
     undefined,
     (error) => console.log(`Error: ${error}`))
+*/
+
+/*
+    const cubeTarget = new THREE.WebGLCubeRenderTarget(128, { generateMipmaps: true,
+        minFilter: THREE.LinearMipMapLinearFilter});
+    
+    //let camera = new THREE.CubeCamera(1, 10000, cubeTarget);
+    //scene.add(camera);
 */
